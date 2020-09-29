@@ -21,7 +21,7 @@ namespace GildedRose
         /// "Backstage passes to a TAFKAL80ETC concert"
         /// "Conjured Mana Cake"
         /// </summary>
-         int backstageInc = 1;
+         
         public void UpdateQuality()
         {
             
@@ -41,10 +41,18 @@ namespace GildedRose
                     }
                     else if(item.Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
-                        item.Quality += backstageInc;
+
+                        if (item.SellIn <= 10 && item.SellIn > 5)
+                            item.Quality += 2;
+                        else if (item.SellIn <= 5 && item.SellIn > 0)
+                            item.Quality += 3;
+                        else
+                            item.Quality++;
+
+
                         if (item.SellIn <= 0)
                             item.Quality = 0;
-                        backstageInc++;
+                        
                     }
                     else if (item.Name == "Conjured Mana Cake")
                     {
