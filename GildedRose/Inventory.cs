@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace GildedRose
 {
@@ -20,10 +21,44 @@ namespace GildedRose
         /// "Backstage passes to a TAFKAL80ETC concert"
         /// "Conjured Mana Cake"
         /// </summary>
+         int backstageInc = 1;
         public void UpdateQuality()
         {
-            // TODO ...
-            // Hint: Iterate through this.items and check Name property to access specific item
+            
+            foreach (var item in items)
+            {
+                if(item.Name == "Sulfuras, Hand of Ragnaros")
+                {
+                    item.Quality = Math.Clamp(item.Quality, 0, 80);
+                }
+                else
+                {
+                    item.SellIn--;
+                    int decrement = (item.SellIn <= 0 ?2 : 1);
+                    if (item.Name == "Aged Brie")
+                    {
+                        item.Quality += decrement;
+                    }
+                    else if(item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                    {
+                        item.Quality += backstageInc;
+                        if (item.SellIn <= 0)
+                            item.Quality = 0;
+                        backstageInc++;
+                    }
+                    else if (item.Name == "Conjured Mana Cake")
+                    {
+                        item.Quality -= decrement*2;
+                    }
+                    else
+                    {
+                        item.Quality -= decrement;
+                    }
+                    item.Quality = Math.Clamp(item.Quality,0,50);
+
+
+                }
+            }
         }
     }
 }
